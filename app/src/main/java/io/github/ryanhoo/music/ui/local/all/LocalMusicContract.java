@@ -37,5 +37,7 @@ import java.util.List;
     interface Presenter extends BasePresenter {
 
         void loadLocalMusic();
+
+        void updateSong(Song song);
     }
 }

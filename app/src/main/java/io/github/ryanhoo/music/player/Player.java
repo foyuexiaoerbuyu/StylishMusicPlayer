@@ -2,9 +2,10 @@ package io.github.ryanhoo.music.player;
 
 import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
-import android.util.Log;
+
 import io.github.ryanhoo.music.data.model.PlayList;
 import io.github.ryanhoo.music.data.model.Song;
+import io.github.ryanhoo.music.utils.XLog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener {
                 mPlayer.start();
                 notifyPlayStatusChanged(true);
             } catch (IOException e) {
-                Log.e(TAG, "play: ", e);
+                XLog.e(TAG, "play: ", e);
                 notifyPlayStatusChanged(false);
                 return false;
             }

@@ -1,6 +1,6 @@
 package io.github.ryanhoo.music;
 
-import android.util.Log;
+import io.github.ryanhoo.music.utils.XLog;
 import rx.Observable;
 import rx.Subscriber;
 import rx.subjects.PublishSubject;
@@ -63,17 +63,17 @@ public class RxBus {
         return new Subscriber<Object>() {
             @Override
             public void onCompleted() {
-                Log.d(TAG, "Duty off!!!");
+                XLog.d(TAG, "Duty off!!!");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "What is this? Please solve this as soon as possible!", e);
+                XLog.e(TAG, "What is this? Please solve this as soon as possible!", e);
             }
 
             @Override
             public void onNext(Object o) {
-                Log.d(TAG, "New event received: " + o);
+                XLog.d(TAG, "New event received: " + o);
             }
         };
     }

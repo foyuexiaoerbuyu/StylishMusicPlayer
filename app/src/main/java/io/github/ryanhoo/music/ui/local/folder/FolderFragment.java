@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -24,6 +25,7 @@ import io.github.ryanhoo.music.ui.details.PlayListDetailsActivity;
 import io.github.ryanhoo.music.ui.local.filesystem.FileSystemActivity;
 import io.github.ryanhoo.music.ui.playlist.AddToPlayListDialogFragment;
 import io.github.ryanhoo.music.ui.playlist.EditPlayListDialogFragment;
+import io.github.ryanhoo.music.utils.XLog;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -161,6 +163,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
 
     @Override
     public void onAddFolder() {
+        XLog.showArgsInfo("点击事件");
         startActivity(new Intent(getActivity(), FileSystemActivity.class));
     }
 

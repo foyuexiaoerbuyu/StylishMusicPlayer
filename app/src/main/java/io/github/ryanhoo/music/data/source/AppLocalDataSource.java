@@ -1,14 +1,18 @@
 package io.github.ryanhoo.music.data.source;
 
 import android.content.Context;
-import android.util.Log;
+
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
+
+import org.xml.sax.helpers.XMLReaderAdapter;
+
 import io.github.ryanhoo.music.data.model.Folder;
 import io.github.ryanhoo.music.data.model.PlayList;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.utils.DBUtils;
+import io.github.ryanhoo.music.utils.XLog;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -48,7 +52,7 @@ import java.util.List;
                     // First query, create the default play list
                     PlayList playList = DBUtils.generateFavoritePlayList(mContext);
                     long result = mLiteOrm.save(playList);
-                    Log.d(TAG, "Create default playlist(Favorite) with " + (result == 1 ? "success" : "failure"));
+                    XLog.d(TAG, "Create default playlist(Favorite) with " + (result == 1 ? "success" : "failure"));
                     playLists.add(playList);
                 }
                 subscriber.onNext(playLists);
@@ -126,7 +130,7 @@ import java.util.List;
                 if (PreferenceManager.isFirstQueryFolders(mContext)) {
                     List<Folder> defaultFolders = DBUtils.generateDefaultFolders();
                     long result = mLiteOrm.save(defaultFolders);
-                    Log.d(TAG, "Create default folders effected " + result + "rows");
+                    XLog.d(TAG, "Create default folders effected " + result + "rows");
                     PreferenceManager.reportFirstQueryFolders(mContext);
                 }
                 List<Folder> folders = mLiteOrm.query(
@@ -218,8 +222,14 @@ import java.util.List;
         return Observable.create(new Observable.OnSubscribe<List<Song>>() {
             @Override
             public void call(Subscriber<? super List<Song>> subscriber) {
+                List<Song> allSongs1 = mLiteOrm.query(Song.class);
+                XLog.showArgsInfo("allSongs1" + allSongs1.size());
+                for (Song song : allSongs1) {
+                    XLog.showArgsInfo("" + song.getAsId() + "   " + song.getId() + "   " + song.getDisplayName());
+                }
                 for (Song song : songs) {
-                    mLiteOrm.insert(song, ConflictAlgorithm.Abort);
+                    long insert = mLiteOrm.insert(song, ConflictAlgorithm.Abort);
+                    XLog.showArgsInfo(song.getId() + "  insert: " + insert + "   " + song.getAsId());
                 }
                 List<Song> allSongs = mLiteOrm.query(Song.class);
                 File file;
@@ -240,11 +250,15 @@ import java.util.List;
 
     @Override
     public Observable<Song> update(final Song song) {
+//        XLog.showArgsInfo("执行1update");
         return Observable.create(new Observable.OnSubscribe<Song>() {
             @Override
             public void call(Subscriber<? super Song> subscriber) {
+//                XLog.showArgsInfo("执行");
                 int result = mLiteOrm.update(song);
+//                XLog.showArgsInfo("result ", result);
                 if (result > 0) {
+//                    XLog.showArgsInfo("执行成功");
                     subscriber.onNext(song);
                 } else {
                     subscriber.onError(new Exception("Update song failed"));

@@ -37,6 +37,17 @@ public class Song implements Parcelable {
 
     private boolean favorite;
 
+
+    private Long asId;
+
+    public Long  getAsId() {
+        return asId;
+    }
+
+    public void setAsId(Long  asId) {
+        this.asId = asId;
+    }
+
     public Song() {
         // Empty
     }

@@ -1,5 +1,7 @@
 package io.github.ryanhoo.music.ui.base.adapter;
 
+import android.view.View;
+
 /**
  * Created with Android Studio.
  * User: ryan.hoo.j@gmail.com
@@ -9,5 +11,5 @@ package io.github.ryanhoo.music.ui.base.adapter;
  */
 public interface OnItemLongClickListener {
 
-    void onItemClick(int position);
+    void onItemClick(View view, int position);
 }

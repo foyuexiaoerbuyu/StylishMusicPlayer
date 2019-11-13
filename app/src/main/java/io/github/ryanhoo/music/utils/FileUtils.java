@@ -1,7 +1,9 @@
 package io.github.ryanhoo.music.utils;
 
 import android.media.MediaMetadataRetriever;
+import android.os.Environment;
 import android.text.TextUtils;
+
 import io.github.ryanhoo.music.data.model.Folder;
 import io.github.ryanhoo.music.data.model.Song;
 
@@ -116,5 +118,45 @@ public class FileUtils {
             value = defaultValue;
         }
         return value;
+    }
+
+    public static void fileMove(String fromDir, String toDir) {
+        try {
+            File dir = new File(fromDir);
+            File[] files = dir.listFiles();
+            if (files == null) {
+                return;
+            }
+            File moveDir = new File(toDir);
+            if (!moveDir.exists()) {
+                boolean mkdirs = moveDir.mkdirs();
+            }
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    fileMove(file.getPath(), toDir + "\\" + file.getName());
+                    boolean delete = file.delete();
+                }
+                File moveFile = new File(moveDir.getPath() + "\\" + file.getName());
+                if (moveFile.exists()) {
+                    boolean delete = moveFile.delete();
+                }
+                boolean b = file.renameTo(moveFile);
+                XLog.showArgsInfo("b ", b);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String defMusicPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "01音乐" + File.separator;
+
+    public static String getDefMusicPath() {
+        File file = new File(defMusicPath);
+        if (!file.exists()) {
+            if (file.mkdirs()) {
+                return null;
+            }
+        }
+        return defMusicPath;
     }
 }

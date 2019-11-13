@@ -139,7 +139,7 @@ public class RecyclerViewFastScroller extends LinearLayout {
             recyclerView.scrollBy(0, (int) offset);
 
             /*
-            Log.d(TAG, String.format("recyclerView[scrollOffset: %d, scrollRange: %d] " +
+            io.github.ryanhoo.music.utils.XLog.d(TAG, String.format("recyclerView[scrollOffset: %d, scrollRange: %d] " +
                             "fastScroll[y: %.2f] proportion: %.2f, height: %d",
                     verticalScrollOffset, verticalScrollRange, fastScroll.getY(), proportion, getHeight()));
             */

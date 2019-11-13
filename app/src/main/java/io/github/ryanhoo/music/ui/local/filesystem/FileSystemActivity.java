@@ -5,10 +5,10 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -18,6 +18,7 @@ import io.github.ryanhoo.music.ui.base.BaseActivity;
 import io.github.ryanhoo.music.ui.base.adapter.OnItemClickListener;
 import io.github.ryanhoo.music.ui.base.adapter.OnItemLongClickListener;
 import io.github.ryanhoo.music.ui.common.DefaultDividerDecoration;
+import io.github.ryanhoo.music.utils.XLog;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -33,14 +34,16 @@ import java.util.*;
  * User: ryan.hoo.j@gmail.com
  * Date: 9/3/16
  * Time: 11:31 PM
- * Desc: FileSystemActivity
+ * Desc: FileSystemActivity 系统文件夹Activity
+ *
+ * @author HP
  */
 public class FileSystemActivity extends BaseActivity {
 
     private static final String TAG = "SystemFileActivity";
 
     final File SDCARD = Environment.getExternalStorageDirectory();
-    String DEFAULT_SDCARD_NAME;
+    private String DEFAULT_SDCARD_NAME;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -87,7 +90,7 @@ public class FileSystemActivity extends BaseActivity {
         });
         mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
-            public void onItemClick(int position) {
+            public void onItemClick(View view, int position) {
                 FileWrapper fileWrapper = mAdapter.getItem(position);
                 if (fileWrapper.file.isDirectory()) {
                     if (mActionModeCallback == null || !mActionModeCallback.isShowing()) {
@@ -201,7 +204,7 @@ public class FileSystemActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable throwable) {
-                        Log.e(TAG, "onError: ", throwable);
+                        XLog.e(TAG, "onError: ", throwable);
                     }
 
                     @Override

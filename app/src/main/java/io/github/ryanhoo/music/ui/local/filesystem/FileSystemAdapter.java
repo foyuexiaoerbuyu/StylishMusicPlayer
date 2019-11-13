@@ -36,7 +36,7 @@ public class FileSystemAdapter extends ListAdapter<FileWrapper, FileItemView> {
                 public void onClick(View v) {
                     final int position = holder.getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        getItemLongClickListener().onItemClick(position);
+                        getItemLongClickListener().onItemClick(v, position);
                     }
                 }
             });

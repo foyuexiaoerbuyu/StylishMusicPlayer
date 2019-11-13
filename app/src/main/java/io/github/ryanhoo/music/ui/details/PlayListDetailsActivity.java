@@ -7,12 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -26,6 +26,7 @@ import io.github.ryanhoo.music.ui.base.BaseActivity;
 import io.github.ryanhoo.music.ui.base.adapter.OnItemClickListener;
 import io.github.ryanhoo.music.ui.common.DefaultDividerDecoration;
 import io.github.ryanhoo.music.ui.playlist.AddToPlayListDialogFragment;
+import io.github.ryanhoo.music.utils.XLog;
 
 /**
  * Created with Android Studio.
@@ -63,7 +64,7 @@ public class PlayListDetailsActivity extends BaseActivity implements PlayListDet
         Folder folder = getIntent().getParcelableExtra(EXTRA_FOLDER);
         mPlayList = getIntent().getParcelableExtra(EXTRA_PLAY_LIST);
         if (folder == null && mPlayList == null) {
-            Log.e(TAG, "onCreate: folder & play list can't be both null!");
+            XLog.e(TAG, "onCreate: folder & play list can't be both null!");
             finish();
         }
         if (folder != null) {

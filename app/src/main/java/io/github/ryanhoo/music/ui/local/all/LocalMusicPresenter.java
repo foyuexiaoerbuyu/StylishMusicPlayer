@@ -7,10 +7,17 @@ import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.data.source.AppRepository;
 import io.github.ryanhoo.music.utils.FileUtils;
+import io.github.ryanhoo.music.utils.XLog;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -19,12 +26,6 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -85,6 +86,35 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
     }
 
     @Override
+    public void updateSong(Song song) {
+        Subscription subscription = Observable.just(song).flatMap(new Func1<Song, Observable<Song>>() {
+            @Override
+            public Observable<Song> call(Song song) {
+                return mRepository.update(song);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Song>() {
+
+                    @Override
+                    public void onCompleted() {
+//                        XLog.showStepLogInfo();
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Song song) {
+//                        XLog.showArgsInfo(song.getDisplayName(), song.getAsId(), song.getId());
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (id != URL_LOAD_LOCAL_MUSIC) return null;
 
@@ -109,6 +139,8 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
                             cursor.moveToFirst();
                             do {
                                 Song song = cursorToMusic(cursor);
+                                song.setAsId(System.currentTimeMillis());
+                                XLog.i(song.getTitle() + "  " + song.getAsId() + "  " + song.getPath() + "  " + song.getDisplayName());
                                 songs.add(song);
                             } while (cursor.moveToNext());
                         }
@@ -118,11 +150,11 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
                 .doOnNext(new Action1<List<Song>>() {
                     @Override
                     public void call(List<Song> songs) {
-                        Log.d(TAG, "onLoadFinished: " + songs.size());
+                        XLog.d(TAG, "onLoadFinished: " + songs.size());
                         Collections.sort(songs, new Comparator<Song>() {
                             @Override
                             public int compare(Song left, Song right) {
-                                return left.getDisplayName().compareTo(right.getDisplayName());
+                                return (right.getAsId() + "").compareTo(left.getAsId() + "");
                             }
                         });
 
@@ -144,7 +176,7 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
                     @Override
                     public void onError(Throwable throwable) {
                         mView.hideProgress();
-                        Log.e(TAG, "onError: ", throwable);
+                        XLog.e(TAG, "onError: ", throwable);
                     }
 
                     @Override

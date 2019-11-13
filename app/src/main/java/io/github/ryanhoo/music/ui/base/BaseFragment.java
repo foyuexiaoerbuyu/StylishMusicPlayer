@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
+
+import io.github.ryanhoo.music.utils.XLog;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -28,6 +30,12 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         addSubscription(subscribeEvents());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        XLog.i("当前所在fragment  " + getClass().getSimpleName());
     }
 
     @Override

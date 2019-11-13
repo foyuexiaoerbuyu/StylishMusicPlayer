@@ -46,13 +46,14 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
                 }
             });
         }
+        /*该方法为长按之后播放该音乐*/
         if (mItemLongClickListener != null) {
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     int position = holder.getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        mItemLongClickListener.onItemClick(position);
+                        mItemLongClickListener.onItemClick(v, position);
                     }
                     return false;
                 }

@@ -1,11 +1,17 @@
 package io.github.ryanhoo.music.utils;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.media.MediaMetadataRetriever;
-import android.util.Log;
-import io.github.ryanhoo.music.data.model.Song;
 
 import java.io.File;
+
+import io.github.ryanhoo.music.data.model.Song;
 
 /**
  * Created with Android Studio.
@@ -28,7 +34,7 @@ public class AlbumUtils {
         try {
             metadataRetriever.setDataSource(file.getAbsolutePath());
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "parseAlbum: ", e);
+            XLog.e(TAG, "parseAlbum: ", e);
         }
         byte[] albumData = metadataRetriever.getEmbeddedPicture();
         if (albumData != null) {

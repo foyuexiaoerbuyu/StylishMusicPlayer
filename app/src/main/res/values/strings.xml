@@ -41,7 +41,7 @@
         <item>@string/mp.fragment.title.play_list</item>
         <item>@string/mp.fragment.title.music</item>
         <item>@string/mp.fragment.title.local_files</item>
-        <item>@string/mp.fragment.title.settings</item>
+        <!--<item>@string/mp.fragment.title.settings</item>-->
     </string-array>
 
     <!-- Music -->

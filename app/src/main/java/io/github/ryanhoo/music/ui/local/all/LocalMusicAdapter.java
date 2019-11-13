@@ -1,6 +1,7 @@
 package io.github.ryanhoo.music.ui.local.all;
 
 import android.content.Context;
+
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.ui.common.AbstractSummaryAdapter;
@@ -42,5 +43,16 @@ public class LocalMusicAdapter extends AbstractSummaryAdapter<Song, LocalMusicIt
             item = getItem(position - 1);
         }
         return item.getDisplayName().substring(0, 1);
+    }
+
+    public void itemMove(int fromPosition, int toPosition) {
+        List<Song> songList = getData();
+        //数据更换
+        songList.add(toPosition, songList.remove(fromPosition));
+        //执行动画
+        notifyItemMoved(fromPosition, toPosition);
+        //受影响的itemd都刷新下
+        notifyItemRangeChanged(Math.min(fromPosition, toPosition), Math.abs(fromPosition - toPosition) + 1);
+
     }
 }
