@@ -28,13 +28,11 @@ import io.github.ryanhoo.music.ui.base.adapter.OnItemLongClickListener;
 import io.github.ryanhoo.music.ui.common.DefaultDividerDecoration;
 import io.github.ryanhoo.music.ui.widget.MenuPopwindow;
 import io.github.ryanhoo.music.ui.widget.RecyclerViewFastScroller;
-import io.github.ryanhoo.music.utils.FileUtils;
 import io.github.ryanhoo.music.utils.XLog;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

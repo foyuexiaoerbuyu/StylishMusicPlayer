@@ -55,7 +55,7 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
                     if (position != RecyclerView.NO_POSITION) {
                         mItemLongClickListener.onItemClick(v, position);
                     }
-                    return false;
+                    return true;
                 }
             });
         }
