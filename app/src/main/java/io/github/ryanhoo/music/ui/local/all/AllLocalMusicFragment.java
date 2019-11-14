@@ -67,7 +67,6 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
 
         mAdapter = new LocalMusicAdapter(getActivity(), null);
 
-        new ItemTouchHelper(new ItemTouchMoveCallback(mAdapter, mPresenter)).attachToRecyclerView(recyclerView);
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -95,6 +94,7 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
         fastScroller.setRecyclerView(recyclerView);
 
         new LocalMusicPresenter(AppRepository.getInstance(), this).subscribe();
+        new ItemTouchHelper(new ItemTouchMoveCallback(mAdapter, mPresenter)).attachToRecyclerView(recyclerView);
     }
 
     // RxBus Events
