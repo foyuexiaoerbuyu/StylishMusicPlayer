@@ -7,19 +7,15 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.RxBus;
-import io.github.ryanhoo.music.data.model.MenuPopwindowBean;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.data.source.AppRepository;
 import io.github.ryanhoo.music.event.PlayListUpdatedEvent;
@@ -29,7 +25,6 @@ import io.github.ryanhoo.music.ui.base.adapter.OnItemClickListener;
 import io.github.ryanhoo.music.ui.base.adapter.OnItemLongClickListener;
 import io.github.ryanhoo.music.ui.common.DefaultDividerDecoration;
 import io.github.ryanhoo.music.ui.common.ItemTouchMoveCallback;
-import io.github.ryanhoo.music.ui.widget.MenuPopwindow;
 import io.github.ryanhoo.music.ui.widget.RecyclerViewFastScroller;
 import io.github.ryanhoo.music.utils.XLog;
 import rx.Subscription;
@@ -94,14 +89,6 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
             }
         });
 
-        getActivity().findViewById(R.id.radio_button_settings).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                XLog.showStepLogInfo();
-//                onSettingBtnClack(view);
-            }
-        });
-
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DefaultDividerDecoration());
 
@@ -110,7 +97,6 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
         new LocalMusicPresenter(AppRepository.getInstance(), this).subscribe();
     }
 
-    private PopupWindow popupWindow;
     // RxBus Events
 
     @Override
@@ -163,43 +149,4 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
         mPresenter = presenter;
     }
 
-
-    /**
-     * 右上角设置按钮
-     *
-     * @param view btnView
-     */
-    public void onSettingBtnClack(View view) {
-        int[] icons = {R.mipmap.icon_menu_item_edit, R.mipmap.icon_menu_item_delete};
-        String[] texts = {"导出音乐", "删除文件"};
-        List<MenuPopwindowBean> list = new ArrayList<>();
-        MenuPopwindowBean bean = null;
-        for (int i = 0; i < icons.length; i++) {
-            bean = new MenuPopwindowBean();
-            bean.setIcon(icons[i]);
-            bean.setText(texts[i]);
-            list.add(bean);
-        }
-        MenuPopwindow pw = new MenuPopwindow(getActivity(), list);
-        pw.setOnItemClick(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                XLog.showArgsInfo(position, l);
-                if (position == 0) {
-                   /* List<Song> songs = mAdapter.getData();
-                    String destFilePath = FileUtils.getDefMusicPath();
-                    XLog.showArgsInfo(destFilePath);
-                    for (Song song : songs) {
-                        String songPath = song.getPath().substring(0, song.getPath().lastIndexOf(File.separator));
-                        XLog.showArgsInfo("songPath ", songPath);
-                        FileUtils.fileMove(songPath, destFilePath);
-                    }
-//                    mPresenter.loadLocalMusic();*/
-                }
-
-            }
-        });
-        //点击右上角的那个button
-        pw.showPopupWindow(getActivity().findViewById(R.id.radio_button_settings));
-    }
 }
