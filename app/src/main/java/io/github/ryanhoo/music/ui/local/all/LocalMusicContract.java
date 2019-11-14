@@ -2,6 +2,7 @@ package io.github.ryanhoo.music.ui.local.all;
 
 import android.content.Context;
 import android.support.v4.app.LoaderManager;
+
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.ui.base.BasePresenter;
 import io.github.ryanhoo.music.ui.base.BaseView;
@@ -15,7 +16,7 @@ import java.util.List;
  * Time: 8:32 PM
  * Desc: LocalMusicContract
  */
-/* package */ interface LocalMusicContract {
+public interface LocalMusicContract {
 
     interface View extends BaseView<Presenter> {
 

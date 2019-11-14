@@ -6,6 +6,7 @@ import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.ui.common.AbstractSummaryAdapter;
 import io.github.ryanhoo.music.ui.widget.RecyclerViewFastScroller;
+import io.github.ryanhoo.music.utils.XLog;
 
 import java.util.List;
 

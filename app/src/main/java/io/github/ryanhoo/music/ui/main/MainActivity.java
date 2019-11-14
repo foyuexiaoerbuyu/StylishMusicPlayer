@@ -22,6 +22,7 @@ import io.github.ryanhoo.music.ui.music.MusicPlayerFragment;
 import io.github.ryanhoo.music.ui.playlist.PlayListFragment;
 import io.github.ryanhoo.music.ui.settings.SettingsFragment;
 import io.github.ryanhoo.music.ui.widget.MenuPopwindow;
+import io.github.ryanhoo.music.ui.widget.NoScrollViewPager;
 import io.github.ryanhoo.music.utils.XLog;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    NoScrollViewPager viewPager;
     @BindViews({R.id.radio_button_play_list, R.id.radio_button_music, R.id.radio_button_local_files})
     List<RadioButton> radioButtons;
 
