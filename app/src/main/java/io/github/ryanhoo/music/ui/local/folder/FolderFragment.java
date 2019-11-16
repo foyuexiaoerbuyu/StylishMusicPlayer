@@ -1,13 +1,21 @@
 package io.github.ryanhoo.music.ui.local.folder;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +37,6 @@ import io.github.ryanhoo.music.utils.XLog;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -117,6 +122,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
         PopupMenu actionMenu = new PopupMenu(getActivity(), actionView, Gravity.END | Gravity.BOTTOM);
         actionMenu.inflate(R.menu.folders_action);
         actionMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @SuppressLint("CommitTransaction")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -154,6 +160,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
                         mDeleteIndex = position;
                         mPresenter.deleteFolder(folder);
                         break;
+                    default:
                 }
                 return true;
             }

@@ -12,12 +12,13 @@ import io.github.ryanhoo.music.ui.local.all.LocalMusicContract;
 
 /**
  * AllLocalMusicFragment左右侧滑:置顶/置底实现类
+ *
  * @author HP
  */
 public class ItemTouchMoveCallback extends ItemTouchHelper.Callback {
 
-    LocalMusicAdapter mAdapter;
-    LocalMusicContract.Presenter mPresenter;
+    private LocalMusicAdapter mAdapter;
+    private LocalMusicContract.Presenter mPresenter;
 
     public ItemTouchMoveCallback(LocalMusicAdapter adapter, LocalMusicContract.Presenter presenter) {
         mAdapter = adapter;

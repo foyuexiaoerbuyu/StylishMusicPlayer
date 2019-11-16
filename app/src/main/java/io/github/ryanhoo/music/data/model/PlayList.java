@@ -4,9 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.litesuits.orm.db.annotation.*;
 import com.litesuits.orm.db.enums.AssignType;
 import com.litesuits.orm.db.enums.Relation;
+
 import io.github.ryanhoo.music.player.PlayMode;
 
 import java.util.*;
@@ -254,7 +256,7 @@ public class PlayList implements Parcelable {
      * The current song being played or is playing based on the {@link #playingIndex}
      */
     public Song getCurrentSong() {
-        if (playingIndex != NO_POSITION) {
+        if (playingIndex != NO_POSITION && songs.size() >= playingIndex) {
             return songs.get(playingIndex);
         }
         return null;

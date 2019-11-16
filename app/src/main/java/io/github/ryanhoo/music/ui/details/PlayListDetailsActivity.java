@@ -139,6 +139,7 @@ public class PlayListDetailsActivity extends BaseActivity implements PlayListDet
                         mDeleteIndex = position;
                         mPresenter.delete(song, mPlayList);
                         break;
+                    default:
                 }
                 return true;
             }

@@ -353,6 +353,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         updateFavoriteToggle(song.isFavorite());
     }
 
+    @Override
     public void onSongUpdated(@Nullable Song song) {
         if (song == null) {
             imageViewAlbum.cancelRotateAnimation();
@@ -407,6 +408,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
             case SINGLE:
                 buttonPlayModeToggle.setImageResource(R.drawable.ic_play_mode_single);
                 break;
+                default:
         }
     }
 

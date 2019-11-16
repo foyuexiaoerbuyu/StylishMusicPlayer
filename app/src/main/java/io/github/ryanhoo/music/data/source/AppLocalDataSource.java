@@ -222,11 +222,6 @@ import java.util.List;
         return Observable.create(new Observable.OnSubscribe<List<Song>>() {
             @Override
             public void call(Subscriber<? super List<Song>> subscriber) {
-                List<Song> allSongs1 = mLiteOrm.query(Song.class);
-                XLog.showArgsInfo("allSongs1" + allSongs1.size());
-                for (Song song : allSongs1) {
-                    XLog.showArgsInfo("" + song.getAsId() + "   " + song.getId() + "   " + song.getDisplayName());
-                }
                 for (Song song : songs) {
                     long insert = mLiteOrm.insert(song, ConflictAlgorithm.Abort);
                     XLog.showArgsInfo(song.getId() + "  insert: " + insert + "   " + song.getAsId());
@@ -250,15 +245,11 @@ import java.util.List;
 
     @Override
     public Observable<Song> update(final Song song) {
-//        XLog.showArgsInfo("执行1update");
         return Observable.create(new Observable.OnSubscribe<Song>() {
             @Override
             public void call(Subscriber<? super Song> subscriber) {
-//                XLog.showArgsInfo("执行");
                 int result = mLiteOrm.update(song);
-//                XLog.showArgsInfo("result ", result);
                 if (result > 0) {
-//                    XLog.showArgsInfo("执行成功");
                     subscriber.onNext(song);
                 } else {
                     subscriber.onError(new Exception("Update song failed"));
